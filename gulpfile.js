@@ -1,8 +1,13 @@
 var gulp = require('gulp'); 
 var del = require("del");
+
+var plugins = require("gulp-load-plugins")();
+
 var concat = require("gulp-concat");
 var uglify = require("gulp-uglify");
 var rename = require("gulp-rename");
+
+var config = require("./config");
 
 gulp.task('default',["mytask1"], function() 
 	{ // place code for your default task here 
@@ -54,7 +59,7 @@ gulp.task('default',["mytask1"], function()
 		
 		gulp.task('watch', function(cb) 
 	{ 
-		gulp.watch('app/**/*.js', ["default"]);
+		gulp.watch(config.appPath + '/**/*.js', ["default"]);
 		
 		});
 		
@@ -62,7 +67,7 @@ gulp.task('default',["mytask1"], function()
 gulp.task('concat-app', function(cb) 
 	{ 
 		gulp.src('app/**/*.module.js')
-		.pipe(concat('app-modules.js'))
+		.pipe(plugins.concat('app-modules.js'))
 		.pipe(gulp.dest("assets"))
 		.pipe(uglify({mangle:false}))
 		.pipe(rename({extname:'.min.js'}))
